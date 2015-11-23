@@ -28,6 +28,7 @@ namespace TYPO3\JobqueueDatabase\Domain\Repository;
  ***************************************************************/
 
 use TYPO3\Jobqueue\Queue\Message;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
  * The repository for Jobs
@@ -41,9 +42,30 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	/**
 	 * @param $queueName
 	 */
-	public function findNextByQueueName($queueName) {
+	public function findNextOneByQueueName($queueName) {
 		/** @var TYPO3\CMS\Extbase\Persistence\Generic\Query $query */
 		$query = $this->createQuery();
+		$this->createConstraint($query, $queueName);
+		return $query->execute()->getFirst();
+	}
+
+	public function findNextByQueueName ($queueName, $limit = 1){
+		/** @var TYPO3\CMS\Extbase\Persistence\Generic\Query $query */
+		$query = $this->createQuery();
+		$this->createConstraint($query, $queueName);
+
+		if ($limit < 1){
+			throw new InvalidArgumentException('Limit can not be less than one!', 1448306118);
+		}
+
+		if ($limit){
+			$query->setLimit($limit);
+		}
+
+		return $query->execute();
+	}
+
+	protected function createConstraint (Query $query, $queueName){
 		$constraints = array();
 		$constraints[] = $query->equals('queueName', $queueName);
 		$constraints[] = $query->equals('state', Message::STATE_PUBLISHED);
@@ -54,6 +76,5 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		$query->matching(
 			$query->logicalAnd($constraints)
 		);
-		return $query->execute()->getFirst();
 	}
 }

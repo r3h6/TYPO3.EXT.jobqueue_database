@@ -72,12 +72,12 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 	 */
 	public function publishMessageAndWaitAndReserveWithoutAndWithTimeout (){
 		$newMessage = new Message('TYPO3');
-		$newMessage->setAvailableAt(new DateTime('now + 1sec'));
+		$newMessage->setAvailableAt(new DateTime('now + 2sec'));
 		$this->queue->publish($newMessage);
 
 		$this->assertSame(NULL, $this->queue->waitAndReserve(), 'There should be no job available at this moment!');
 
-		$message = $this->queue->waitAndReserve(1.1);
+		$message = $this->queue->waitAndReserve(2.1);
 		$this->assertInstanceOf(Message::class, $message);
 		$this->assertSame(Message::STATE_RESERVED, $message->getState(), 'Message has not the state reserved!');
 		$this->assertNotEmpty($message->getIdentifier(), 'Message identifier should be set!');
@@ -97,4 +97,20 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 		$this->assertSame(0, $this->getDatabaseConnection()->exec_SELECTcountRows('*', self::TABLE, 'uid=1'), 'Job was not deleted in database!');
 	}
 
+	/**
+	 * @test
+	 */
+	public function countJobs (){
+		$this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
+		$this->assertSame(4, $this->queue->count());
+	}
+
+	/**
+	 * @test
+	 */
+	public function peekFirstTwo (){
+		$this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
+		$messages = $this->queue->peek(2);
+		$this->assertCount(2, $messages, 'There should be only two messages');
+	}
 }

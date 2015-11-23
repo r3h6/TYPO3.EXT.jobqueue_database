@@ -37,11 +37,20 @@ class DatabaseQueue implements QueueInterface {
 	}
 
 	public function waitAndTake($timeout = NULL){
-
+		$job = $this->jobRepository->findNextOneByQueueName($this->name);
+		if ($job !== NULL){
+			$message = $this->decodeJob($job);
+			$this->finish($message);
+			return $message;
+		} else if ($timeout !== NULL) {
+			sleep($timeout);
+			return $this->waitAndReserve();
+		}
+		return NULL;
 	}
 
 	public function waitAndReserve($timeout = NULL){
-		$job = $this->jobRepository->findNextByQueueName($this->name);
+		$job = $this->jobRepository->findNextOneByQueueName($this->name);
 		if ($job !== NULL){
 			$job->setState(Message::STATE_RESERVED);
 			$this->jobRepository->update($job);
@@ -64,15 +73,32 @@ class DatabaseQueue implements QueueInterface {
 	}
 
 	public function peek($limit = 1){
-
+		$messages = [];
+		$jobs = $this->jobRepository->findNextByQueueName($this->name, $limit);
+		foreach ($jobs as $job){
+			$messages[] = $this->decodeJob($job);
+		}
+		return $messages;
 	}
 
 	public function getMessage($identifier){
-
+		$job = $this->findByUid($identifier);
+		if ($job){
+			return $this->decodeJob($job);
+		}
+		return NULL;
 	}
 
 	public function count(){
+		return $this->jobRepository->countByQueueName($this->name);
+	}
 
+	public function getOptions (){
+		return $this->options;
+	}
+
+	public function getName (){
+		return $this->name;
 	}
 
 	private function encodeJob (Message $message){
