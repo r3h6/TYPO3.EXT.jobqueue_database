@@ -1,6 +1,6 @@
 <?php
-namespace TYPO3\JobqueueDatabase\Domain\Model;
 
+namespace TYPO3\JobqueueDatabase\Domain\Model;
 
 /***************************************************************
  *
@@ -28,164 +28,169 @@ namespace TYPO3\JobqueueDatabase\Domain\Model;
  ***************************************************************/
 
 /**
- * Jobs
+ * Jobs.
  */
-class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
+    /**
+     * Queue name.
+     *
+     * @var string
+     */
+    protected $queueName = '';
 
-	/**
-	 * Queue name
-	 *
-	 * @var string
-	 */
-	protected $queueName = '';
+    /**
+     * Payload.
+     *
+     * @var string
+     */
+    protected $payload = '';
 
-	/**
-	 * Payload
-	 *
-	 * @var string
-	 */
-	protected $payload = '';
+    /**
+     * State.
+     *
+     * @var int
+     */
+    protected $state = 0;
 
-	/**
-	 * State
-	 *
-	 * @var integer
-	 */
-	protected $state = 0;
+    /**
+     * Attemps.
+     *
+     * @var int
+     */
+    protected $attemps = 0;
 
-	/**
-	 * Attemps
-	 *
-	 * @var integer
-	 */
-	protected $attemps = 0;
+    /**
+     * Starttime.
+     *
+     * @var \DateTime
+     */
+    protected $starttime = null;
 
-	/**
-	 * Starttime
-	 *
-	 * @var \DateTime
-	 */
-	protected $starttime = NULL;
+    /**
+     * Timestamp.
+     *
+     * @var \DateTime
+     */
+    protected $tstamp = null;
 
-	/**
-	 * Timestamp
-	 *
-	 * @var \DateTime
-	 */
-	protected $tstamp = NULL;
+    /**
+     * Returns the queueName.
+     *
+     * @return string $queueName
+     */
+    public function getQueueName()
+    {
+        return $this->queueName;
+    }
 
-	/**
-	 * Returns the queueName
-	 *
-	 * @return string $queueName
-	 */
-	public function getQueueName() {
-		return $this->queueName;
-	}
+    /**
+     * Sets the queueName.
+     *
+     * @param string $queueName
+     */
+    public function setQueueName($queueName)
+    {
+        $this->queueName = $queueName;
+    }
 
-	/**
-	 * Sets the queueName
-	 *
-	 * @param string $queueName
-	 * @return void
-	 */
-	public function setQueueName($queueName) {
-		$this->queueName = $queueName;
-	}
+    /**
+     * Returns the payload.
+     *
+     * @return string $payload
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
 
-	/**
-	 * Returns the payload
-	 *
-	 * @return string $payload
-	 */
-	public function getPayload() {
-		return $this->payload;
-	}
+    /**
+     * Sets the payload.
+     *
+     * @param string $payload
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+    }
 
-	/**
-	 * Sets the payload
-	 *
-	 * @param string $payload
-	 * @return void
-	 */
-	public function setPayload($payload) {
-		$this->payload = $payload;
-	}
+    /**
+     * Returns the state.
+     *
+     * @return int $state
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
 
-	/**
-	 * Returns the state
-	 *
-	 * @return integer $state
-	 */
-	public function getState() {
-		return $this->state;
-	}
+    /**
+     * Sets the state.
+     *
+     * @param int $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
 
-	/**
-	 * Sets the state
-	 *
-	 * @param integer $state
-	 * @return void
-	 */
-	public function setState($state) {
-		$this->state = $state;
-	}
+    /**
+     * Returns the attemps.
+     *
+     * @return int $attemps
+     */
+    public function getAttemps()
+    {
+        return $this->attemps;
+    }
 
-	/**
-	 * Returns the attemps
-	 *
-	 * @return integer $attemps
-	 */
-	public function getAttemps() {
-		return $this->attemps;
-	}
+    /**
+     * Sets the attemps.
+     *
+     * @param int $attemps
+     */
+    public function setAttemps($attemps)
+    {
+        $this->attemps = $attemps;
+    }
 
-	/**
-	 * Sets the attemps
-	 *
-	 * @param integer $attemps
-	 * @return void
-	 */
-	public function setAttemps($attemps) {
-		$this->attemps = $attemps;
-	}
+    /**
+     * Returns the starttime.
+     *
+     * @return \DateTime $starttime
+     */
+    public function getStarttime()
+    {
+        return $this->starttime;
+    }
 
-	/**
-	 * Returns the starttime
-	 *
-	 * @return \DateTime $starttime
-	 */
-	public function getStarttime() {
-		return $this->starttime;
-	}
+    /**
+     * Sets the starttime.
+     *
+     * @param \DateTime $starttime
+     */
+    public function setStarttime(\DateTime $starttime = null)
+    {
+        $this->starttime = $starttime;
+    }
 
-	/**
-	 * Sets the starttime
-	 *
-	 * @param \DateTime $starttime
-	 * @return void
-	 */
-	public function setStarttime(\DateTime $starttime = null) {
-		$this->starttime = $starttime;
-	}
+    /**
+     * Returns the tstamp.
+     *
+     * @return \DateTime $tstamp
+     */
+    public function getTstamp()
+    {
+        return $this->tstamp;
+    }
 
-	/**
-	 * Returns the tstamp
-	 *
-	 * @return \DateTime $tstamp
-	 */
-	public function getTstamp() {
-		return $this->tstamp;
-	}
-
-	/**
-	 * Sets the tstamp
-	 *
-	 * @param \DateTime $tstamp
-	 * @return void
-	 */
-	public function setTstamp(\DateTime $tstamp = null) {
-		$this->tstamp = $tstamp;
-	}
-
+    /**
+     * Sets the tstamp.
+     *
+     * @param \DateTime $tstamp
+     */
+    public function setTstamp(\DateTime $tstamp = null)
+    {
+        $this->tstamp = $tstamp;
+    }
 }
