@@ -1,11 +1,11 @@
 {
-    "name": "r3h6/ext-jobqueue_database",
+    "name": "r3h6/jobqueue_database",
     "type": "typo3-cms-extension",
     "description": "Database implementation of job queues for TYPO3.",
     "keywords": [
         "TYPO3",
         "extension",
-        "jobqueue_database"
+        "jobqueue"
     ],
     "authors": [
         {
@@ -16,8 +16,8 @@
     ],
     "license": "GPL-3.0+",
     "require": {
-        "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0",
-        "r3h6/ext-jobqueue": "*"
+        "typo3/cms-core": "~6.2.14|>=7.6.0,<8.0",
+        "r3h6/jobqueue": "*"
     },
     "require-dev": {
         "mikey179/vfsStream": "1.4.*@dev",
@@ -35,8 +35,8 @@
         }
     },
     "replace": {
-        "ext_jobqueue_database": "self.version",
-        "typo3-ter/ext-jobqueue_database": "self.version"
+        "jobqueue_database": "self.version",
+        "typo3-ter/jobqueue_database": "self.version"
     },
     "config": {
         "vendor-dir": ".Build/vendor",
