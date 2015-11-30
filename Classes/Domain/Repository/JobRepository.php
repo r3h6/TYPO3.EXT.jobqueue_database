@@ -42,6 +42,14 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
     protected $table = 'tx_jobqueuedatabase_domain_model_job';
 
+    public function initializeObject()
+    {
+        /** @var $querySettings \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings */
+        $querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
+        $querySettings->setRespectStoragePage(false);
+        $this->setDefaultQuerySettings($querySettings);
+    }
+
     /**
      * @param $queueName
      */
@@ -50,7 +58,6 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         /** @var TYPO3\CMS\Extbase\Persistence\Generic\Query $query */
         $query = $this->createQuery();
         $this->createConstraint($query, $queueName);
-
         return $query->execute()->getFirst();
     }
 
