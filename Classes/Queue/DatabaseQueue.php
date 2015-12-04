@@ -26,6 +26,8 @@ class DatabaseQueue implements QueueInterface
 
     protected $name;
 
+    protected $options;
+
     public function __construct($name, $options)
     {
         $this->name = $name;

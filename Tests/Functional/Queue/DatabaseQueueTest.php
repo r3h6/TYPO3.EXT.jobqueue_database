@@ -12,20 +12,28 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
 {
     use \TYPO3\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
 
+    const TABLE = 'tx_jobqueuedatabase_domain_model_job';
+    const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
+    const QUEUE_NAME = 'TestQueue';
+
     protected $coreExtensionsToLoad = array('extbase');
     protected $testExtensionsToLoad = array('typo3conf/ext/jobqueue', 'typo3conf/ext/jobqueue_database');
 
-    protected $queue = null;
-    protected $queueName = 'TestQueue';
+    /**
+     * @var TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected $objectManager;
 
-    const TABLE = 'tx_jobqueuedatabase_domain_model_job';
-    const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
+    /**
+     * @var TYPO3\JobqueueDatabase\Queue\DatabaseQueue
+     */
+    protected $queue;
 
     public function setUp()
     {
         parent::setUp();
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->queue = $this->objectManager->get(DatabaseQueue::class, $this->queueName, null);
+        $this->queue = $this->objectManager->get(DatabaseQueue::class, self::QUEUE_NAME, null);
 
         $this->setUpBasicFrontendEnvironment();
     }
@@ -33,7 +41,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
     public function tearDown()
     {
         parent::tearDown();
-        unset($this->queue);
+        unset($this->queue, $this->objectManager);
     }
 
     /**
@@ -46,7 +54,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         $this->queue->publish($newMessage);
         $record = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('queue_name, payload, state, attemps, starttime', self::TABLE, '');
         $this->assertSame([
-            'queue_name' => $this->queueName,
+            'queue_name' => self::QUEUE_NAME,
             'payload' => $payload,
             'state' => ''.Message::STATE_PUBLISHED,
             'attemps' => '0',
@@ -61,7 +69,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function waitAndReserve()
     {
-        $this->importDataSet(ORIGINAL_ROOT.self::JOBS_FIXTURES);
+        $this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
 
         $message = $this->queue->waitAndReserve();
         $this->assertInstanceOf(Message::class, $message, 'Not a message!');
@@ -101,7 +109,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function finishMessage()
     {
-        $this->importDataSet(ORIGINAL_ROOT.self::JOBS_FIXTURES);
+        $this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
         $message = new Message('', 1);
         $this->queue->finish($message);
         $this->assertSame(Message::STATE_DONE, $message->getState(), 'Message is not of state done!');
@@ -113,7 +121,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function countJobs()
     {
-        $this->importDataSet(ORIGINAL_ROOT.self::JOBS_FIXTURES);
+        $this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
         $this->assertSame(4, $this->queue->count());
     }
 
@@ -122,7 +130,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function peekFirstTwo()
     {
-        $this->importDataSet(ORIGINAL_ROOT.self::JOBS_FIXTURES);
+        $this->importDataSet(ORIGINAL_ROOT . self::JOBS_FIXTURES);
         $messages = $this->queue->peek(2);
         $this->assertCount(2, $messages, 'There should be only two messages');
     }
