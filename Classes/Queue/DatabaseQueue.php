@@ -44,7 +44,9 @@ class DatabaseQueue implements QueueInterface
     /**
      * @var array
      */
-    protected $options;
+    protected $options = [
+        'timeout' => null,
+    ];
 
     /**
      * Constructor
@@ -55,7 +57,7 @@ class DatabaseQueue implements QueueInterface
     public function __construct($name, $options)
     {
         $this->name = $name;
-        $this->options = $options;
+        $this->options = (array) $options + $this->options;
     }
 
     /**
@@ -76,6 +78,9 @@ class DatabaseQueue implements QueueInterface
      */
     public function waitAndTake($timeout = null)
     {
+        if ($timeout === null) {
+            $timeout = $this->options['timeout'];
+        }
         $job = $this->jobRepository->findNextOneByQueueName($this->name);
         if ($job !== null) {
             $message = $this->decodeJob($job);
@@ -97,6 +102,9 @@ class DatabaseQueue implements QueueInterface
      */
     public function waitAndReserve($timeout = null)
     {
+        if ($timeout === null) {
+            $timeout = $this->options['timeout'];
+        }
         $job = $this->jobRepository->findNextOneByQueueName($this->name);
         if ($job !== null) {
             if ($this->jobRepository->reserve($job)) {
