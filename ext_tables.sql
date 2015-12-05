@@ -20,4 +20,4 @@ CREATE TABLE tx_jobqueuedatabase_domain_model_job (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 
-);
+) ENGINE=InnoDB;
