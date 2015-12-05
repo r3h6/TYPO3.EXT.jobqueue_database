@@ -2,38 +2,65 @@
 
 namespace TYPO3\JobqueueDatabase\Queue;
 
+/*                                                                        *
+ * This script is part of the TYPO3 project - inspiring people to share!  *
+ *                                                                        *
+ * TYPO3 is free software; you can redistribute it and/or modify it under *
+ * the terms of the GNU General Public License version 3 as published by  *
+ * the Free Software Foundation.                                          *
+ *                                                                        *
+ * This script is distributed in the hope that it will be useful, but     *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHAN-    *
+ * TABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General      *
+ * Public License for more details.                                       *
+ *                                                                        */
+
 use TYPO3\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
 use TYPO3\Jobqueue\Queue\Message;
 use TYPO3\Jobqueue\Queue\QueueInterface;
 
+/**
+ * DatabaseQueue
+ */
 class DatabaseQueue implements QueueInterface
 {
     /**
-     * [$jobRepository description].
-     *
      * @var TYPO3\JobqueueDatabase\Domain\Repository\JobRepository
      * @inject
      */
     protected $jobRepository = null;
 
     /**
-     * PersistenceManager.
-     *
      * @var TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      * @inject
      */
     protected $persistenceManager = null;
 
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var array
+     */
     protected $options;
 
+    /**
+     * Constructor
+     *
+     * @param string $name
+     * @param array  $options
+     */
     public function __construct($name, $options)
     {
         $this->name = $name;
         $this->options = $options;
     }
 
+    /**
+     * @param Message $message
+     */
     public function publish(Message $message)
     {
         $job = $this->encodeJob($message);
@@ -43,6 +70,10 @@ class DatabaseQueue implements QueueInterface
         $message->setState($job->getState());
     }
 
+    /**
+     * @param int $timeout
+     * @return Message
+     */
     public function waitAndTake($timeout = null)
     {
         $job = $this->jobRepository->findNextOneByQueueName($this->name);
@@ -60,14 +91,14 @@ class DatabaseQueue implements QueueInterface
         return null;
     }
 
+    /**
+     * @param int $timeout
+     * @return Message
+     */
     public function waitAndReserve($timeout = null)
     {
         $job = $this->jobRepository->findNextOneByQueueName($this->name);
         if ($job !== null) {
-            // $job->setState(Message::STATE_RESERVED);
-            // $this->jobRepository->update($job);
-            // $this->persistenceManager->persistAll();
-            // return $this->decodeJob($job);
             if ($this->jobRepository->reserve($job)) {
                 return $this->decodeJob($job);
             }
@@ -80,6 +111,9 @@ class DatabaseQueue implements QueueInterface
         return null;
     }
 
+    /**
+     * @param Message $message
+     */
     public function finish(Message $message)
     {
         $job = $this->jobRepository->findByUid($message->getIdentifier());
@@ -91,6 +125,10 @@ class DatabaseQueue implements QueueInterface
         return true;
     }
 
+    /**
+     * @param int $limit
+     * @return array<\TYPO3\Jobqueue\Queue\Message>
+     */
     public function peek($limit = 1)
     {
         $messages = [];
@@ -102,6 +140,10 @@ class DatabaseQueue implements QueueInterface
         return $messages;
     }
 
+    /**
+     * @param string $identifier
+     * @return Message
+     */
     public function getMessage($identifier)
     {
         $job = $this->findByUid($identifier);
@@ -112,21 +154,36 @@ class DatabaseQueue implements QueueInterface
         return null;
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return $this->jobRepository->countByQueueName($this->name);
     }
 
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         return $this->options;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Converts a message to a data model.
+     *
+     * @param  Message $message [description]
+     * @return TYPO3\JobqueueDatabase\Domain\Model\Job
+     */
     private function encodeJob(Message $message)
     {
         $job = new DatabaseJob();
@@ -139,6 +196,12 @@ class DatabaseQueue implements QueueInterface
         return $job;
     }
 
+    /**
+     * Converts a data model into a message.
+     *
+     * @param  TYPO3\JobqueueDatabase\Domain\Model\Job $job
+     * @return Message
+     */
     private function decodeJob(DatabaseJob $job)
     {
         $message = new Message(
