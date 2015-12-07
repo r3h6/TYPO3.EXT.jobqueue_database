@@ -81,18 +81,24 @@ class DatabaseQueue implements QueueInterface
         if ($timeout === null) {
             $timeout = $this->options['timeout'];
         }
-        $job = $this->jobRepository->findNextOneByQueueName($this->name);
-        if ($job !== null) {
-            $message = $this->decodeJob($job);
-            $this->finish($message);
-
-            return $message;
-        } elseif ($timeout !== null) {
-            sleep($timeout);
-
-            return $this->waitAndReserve();
-        }
-
+        do {
+            $job = $this->jobRepository->findNextOneByQueueName($this->name);
+            if ($job !== null) {
+                if ($this->jobRepository->reserve($job)) {
+                    $message = $this->decodeJob($job);
+                    $this->finish($message);
+                    return $message;
+                }
+            }
+            if ($timeout === null) {
+                sleep(1);
+            } elseif ($timeout > 0) {
+                sleep($timeout);
+                $timeout = 0;
+            } else {
+                break;
+            }
+        } while (true);
         return null;
     }
 
@@ -105,17 +111,22 @@ class DatabaseQueue implements QueueInterface
         if ($timeout === null) {
             $timeout = $this->options['timeout'];
         }
-        $job = $this->jobRepository->findNextOneByQueueName($this->name);
-        if ($job !== null) {
-            if ($this->jobRepository->reserve($job)) {
-                return $this->decodeJob($job);
+        do {
+            $job = $this->jobRepository->findNextOneByQueueName($this->name);
+            if ($job !== null) {
+                if ($this->jobRepository->reserve($job)) {
+                    return $this->decodeJob($job);
+                }
             }
-        } elseif ($timeout !== null) {
-            sleep($timeout);
-
-            return $this->waitAndReserve();
-        }
-
+            if ($timeout === null) {
+                sleep(1);
+            } elseif ($timeout > 0) {
+                sleep($timeout);
+                $timeout = 0;
+            } else {
+                break;
+            }
+        } while (true);
         return null;
     }
 

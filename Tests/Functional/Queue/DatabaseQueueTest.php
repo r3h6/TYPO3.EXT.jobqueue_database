@@ -49,7 +49,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
     {
         parent::setUp();
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->queue = $this->objectManager->get(DatabaseQueue::class, self::QUEUE_NAME, null);
+        $this->queue = $this->objectManager->get(DatabaseQueue::class, self::QUEUE_NAME, ['timeout' => 0]);
 
         $this->setUpBasicFrontendEnvironment();
     }
