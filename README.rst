@@ -9,4 +9,4 @@ Implements concrete Queue for the database workqueue. Requires the exension *job
 Configuration
 -------------
 
-In order to use this queue you should set the *defaultQueue* to ``TYPO3\\JobqueueDatabase\\Queue\\DatabaseQueue`` in the *jobqueue* extension settings.
+In order to use this queue you should set the *defaultQueue* to ``TYPO3\JobqueueDatabase\Queue\DatabaseQueue`` in the *jobqueue* extension settings.

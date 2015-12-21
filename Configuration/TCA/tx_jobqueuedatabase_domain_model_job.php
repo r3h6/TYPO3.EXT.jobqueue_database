@@ -1,11 +1,21 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+return array(
+    'ctrl' => array(
+        'title' => 'LLL:EXT:jobqueue_database/Resources/Private/Language/locallang_db.xlf:tx_jobqueuedatabase_domain_model_job',
+        'label' => 'crdate',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'dividers2tabs' => true,
 
-$GLOBALS['TCA']['tx_jobqueuedatabase_domain_model_job'] = array(
-    'ctrl' => $GLOBALS['TCA']['tx_jobqueuedatabase_domain_model_job']['ctrl'],
+        'enablecolumns' => array(
+
+        ),
+        'searchFields' => 'queue_name,payload,state,attemps,starttime,tstamp,',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('jobqueue_database').'Resources/Public/Icons/tx_jobqueuedatabase_domain_model_job.gif',
+        'readOnly' => true,
+        'rootLevel' => 1,
+    ),
     'interface' => array(
         'showRecordFieldList' => 'queue_name, payload, state, attemps, starttime, tstamp',
     ),
