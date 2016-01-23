@@ -1,9 +1,10 @@
+.. _start:
+
 *****************
 Jobqueue Database
 *****************
 
 Implements concrete Queue for the database workqueue. Requires the exension *jobqueue* to be installed.
-
 
 
 Configuration
