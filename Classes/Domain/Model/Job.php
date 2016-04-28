@@ -62,6 +62,11 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $tstamp = null;
 
+    public function __construct()
+    {
+        $this->pid = 0;
+    }
+
     /**
      * Returns the queueName.
      *

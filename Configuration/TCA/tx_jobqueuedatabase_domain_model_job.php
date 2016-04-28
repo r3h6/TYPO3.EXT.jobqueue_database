@@ -2,7 +2,7 @@
 return array(
     'ctrl' => array(
         'title' => 'LLL:EXT:jobqueue_database/Resources/Private/Language/locallang_db.xlf:tx_jobqueuedatabase_domain_model_job',
-        'label' => 'crdate',
+        'label' => 'tstamp',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'dividers2tabs' => true,
