@@ -11,12 +11,12 @@ CREATE TABLE tx_jobqueuedatabase_domain_model_job (
 	state int(11) DEFAULT '0' NOT NULL,
 	attemps int(11) DEFAULT '0' NOT NULL,
 	starttime int(11) DEFAULT '0' NOT NULL,
-	tstamp int(11) DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY queue_name (queue_name),
 
 ) ENGINE=InnoDB;
