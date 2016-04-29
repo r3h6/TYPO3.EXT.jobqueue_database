@@ -4,4 +4,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$GLOBALS['TYPO3_CONF_VARS']['EXT']['jobqueue']['TYPO3\\JobqueueDatabase\\Queue\\DatabaseQueue'] = [];
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jobqueue'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jobqueue'] = [];
+}
+
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jobqueue']['TYPO3\\JobqueueDatabase\\Queue\\DatabaseQueue'] = [];
