@@ -10,7 +10,7 @@
 Documentation
 =============
 
-Job queues for TYPO3. Implements concrete queue for the database workqueue. Requires the exension *jobqueue* to be installed.
+Job queues for TYPO3 CMS. Implements concrete queue for the database workqueue. Requires the exension *jobqueue* to be installed.
 
 
 Configuration

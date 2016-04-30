@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'Jobqueue Database',
-    'description' => 'Database implementation of the jobqueue.',
+    'description' => 'Database implementation of job queues for TYPO3 CMS.',
     'category' => 'services',
     'author' => 'R3H6',
     'author_email' => 'r3h6@outlook.com',
@@ -25,7 +25,7 @@ $EM_CONF[$_EXTKEY] = array(
     'constraints' => array(
         'depends' => array(
             'typo3' => '7.6.0-7.6.99',
-            'jobqueue' => '1.0.0-1.0.99',
+            'jobqueue' => '1.0.0-1.99.99',
         ),
         'conflicts' => array(
         ),

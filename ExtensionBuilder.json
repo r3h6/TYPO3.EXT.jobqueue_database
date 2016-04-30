@@ -109,7 +109,7 @@
         "backendModules": [
 
         ],
-        "description": "Database implementation of the jobqueue.",
+        "description": "Database implementation of job queues for TYPO3 CMS.",
         "emConf": {
             "category": "services",
             "custom_category": "",
