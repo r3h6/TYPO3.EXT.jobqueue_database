@@ -1,10 +1,16 @@
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
+
 .. _start:
 
-*****************
-Jobqueue Database
-*****************
+=============
+Documentation
+=============
 
-Implements concrete Queue for the database workqueue. Requires the exension *jobqueue* to be installed.
+Job queues for TYPO3. Implements concrete queue for the database workqueue. Requires the exension *jobqueue* to be installed.
 
 
 Configuration
