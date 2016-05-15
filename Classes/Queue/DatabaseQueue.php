@@ -45,7 +45,7 @@ class DatabaseQueue implements QueueInterface
      * @var array
      */
     protected $options = [
-        'timeout' => null,
+        'timeout' => 1,
     ];
 
     /**
@@ -54,10 +54,10 @@ class DatabaseQueue implements QueueInterface
      * @param string $name
      * @param array  $options
      */
-    public function __construct($name, array $options)
+    public function __construct($name, array $options = array())
     {
         $this->name = $name;
-        $this->options = (array) $options + $this->options;
+        ArrayUtility::mergeRecursiveWithOverrule($this->options, $options, true, false);
     }
 
     /**
