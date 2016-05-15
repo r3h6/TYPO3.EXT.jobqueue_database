@@ -40,13 +40,4 @@ trait BasicFrontendEnvironmentTrait
         $frontendControllerMock->sys_page = $pageRepositoryFixture;
         $GLOBALS['TSFE'] = $frontendControllerMock;
     }
-
-    protected $disallowChangesToGlobalState = null;
-
-    public function setDisallowChangesToGlobalState($disallowChangesToGlobalState)
-    {
-        if (is_null($this->disallowChangesToGlobalState) && is_bool($disallowChangesToGlobalState)) {
-            $this->disallowChangesToGlobalState = $disallowChangesToGlobalState;
-        }
-    }
 }
