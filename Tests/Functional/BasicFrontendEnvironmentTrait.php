@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Tests\Functional;
+namespace R3H6\JobqueueDatabase\Tests\Functional;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *

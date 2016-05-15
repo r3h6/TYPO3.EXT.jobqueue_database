@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Tests\Unit\Domain\Model;
+namespace R3H6\JobqueueDatabase\Tests\Unit\Domain\Model;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
@@ -16,18 +16,18 @@ namespace TYPO3\JobqueueDatabase\Tests\Unit\Domain\Model;
  *                                                                        */
 
 /**
- * Test case for class \TYPO3\JobqueueDatabase\Domain\Model\Job.
+ * Test case for class \R3H6\JobqueueDatabase\Domain\Model\Job.
  */
 class JobTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
-     * @var \TYPO3\JobqueueDatabase\Domain\Model\Job
+     * @var \R3H6\JobqueueDatabase\Domain\Model\Job
      */
     protected $subject = null;
 
     protected function setUp()
     {
-        $this->subject = new \TYPO3\JobqueueDatabase\Domain\Model\Job();
+        $this->subject = new \R3H6\JobqueueDatabase\Domain\Model\Job();
     }
 
     protected function tearDown()

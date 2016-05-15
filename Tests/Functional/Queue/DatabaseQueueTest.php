@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Tests\Functional\Queue;
+namespace R3H6\JobqueueDatabase\Tests\Functional\Queue;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
@@ -18,15 +18,15 @@ namespace TYPO3\JobqueueDatabase\Tests\Functional\Queue;
 use DateTime;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\JobqueueDatabase\Queue\DatabaseQueue;
-use TYPO3\Jobqueue\Queue\Message;
+use R3H6\JobqueueDatabase\Queue\DatabaseQueue;
+use R3H6\Jobqueue\Queue\Message;
 
 /**
  * Functional test case for the DatabaseQueue.
  */
 class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
 {
-    use \TYPO3\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
+    use \R3H6\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
 
     const TABLE = 'tx_jobqueuedatabase_domain_model_job';
     const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
@@ -41,7 +41,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
     protected $objectManager;
 
     /**
-     * @var TYPO3\JobqueueDatabase\Queue\DatabaseQueue
+     * @var R3H6\JobqueueDatabase\Queue\DatabaseQueue
      */
     protected $queue;
 

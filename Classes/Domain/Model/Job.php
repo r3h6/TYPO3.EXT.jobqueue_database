@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Domain\Model;
+namespace R3H6\JobqueueDatabase\Domain\Model;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *

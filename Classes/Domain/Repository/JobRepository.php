@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Domain\Repository;
+namespace R3H6\JobqueueDatabase\Domain\Repository;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
@@ -15,8 +15,8 @@ namespace TYPO3\JobqueueDatabase\Domain\Repository;
  * Public License for more details.                                       *
  *                                                                        */
 
-use TYPO3\Jobqueue\Queue\Message;
-use TYPO3\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
+use R3H6\Jobqueue\Queue\Message;
+use R3H6\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**

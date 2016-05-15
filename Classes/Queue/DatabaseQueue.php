@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\JobqueueDatabase\Queue;
+namespace R3H6\JobqueueDatabase\Queue;
 
 /*                                                                        *
  * This script is part of the TYPO3 project - inspiring people to share!  *
@@ -15,9 +15,9 @@ namespace TYPO3\JobqueueDatabase\Queue;
  * Public License for more details.                                       *
  *                                                                        */
 
-use TYPO3\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
-use TYPO3\Jobqueue\Queue\Message;
-use TYPO3\Jobqueue\Queue\QueueInterface;
+use R3H6\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
+use R3H6\Jobqueue\Queue\Message;
+use R3H6\Jobqueue\Queue\QueueInterface;
 
 /**
  * DatabaseQueue
@@ -25,7 +25,7 @@ use TYPO3\Jobqueue\Queue\QueueInterface;
 class DatabaseQueue implements QueueInterface
 {
     /**
-     * @var TYPO3\JobqueueDatabase\Domain\Repository\JobRepository
+     * @var R3H6\JobqueueDatabase\Domain\Repository\JobRepository
      * @inject
      */
     protected $jobRepository = null;
@@ -146,7 +146,7 @@ class DatabaseQueue implements QueueInterface
 
     /**
      * @param int $limit
-     * @return array<\TYPO3\Jobqueue\Queue\Message>
+     * @return array<\R3H6\Jobqueue\Queue\Message>
      */
     public function peek($limit = 1)
     {
@@ -201,7 +201,7 @@ class DatabaseQueue implements QueueInterface
      * Converts a message to a data model.
      *
      * @param  Message $message [description]
-     * @return TYPO3\JobqueueDatabase\Domain\Model\Job
+     * @return R3H6\JobqueueDatabase\Domain\Model\Job
      */
     private function encodeJob(Message $message)
     {
@@ -218,7 +218,7 @@ class DatabaseQueue implements QueueInterface
     /**
      * Converts a data model into a message.
      *
-     * @param  TYPO3\JobqueueDatabase\Domain\Model\Job $job
+     * @param  R3H6\JobqueueDatabase\Domain\Model\Job $job
      * @return Message
      */
     private function decodeJob(DatabaseJob $job)

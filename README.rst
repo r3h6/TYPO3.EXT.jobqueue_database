@@ -16,7 +16,7 @@ Job queues for TYPO3 CMS. Implements concrete queue for the database workqueue. 
 Configuration
 -------------
 
-In order to use this queue you should set the *defaultQueue* to ``TYPO3\JobqueueDatabase\Queue\DatabaseQueue`` in the *jobqueue* extension settings.
+In order to use this queue you should set the *defaultQueue* to ``R3H6\JobqueueDatabase\Queue\DatabaseQueue`` in the *jobqueue* extension settings.
 
 
 Contributing
