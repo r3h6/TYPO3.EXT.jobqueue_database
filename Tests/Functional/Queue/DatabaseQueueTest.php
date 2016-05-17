@@ -27,6 +27,7 @@ use R3H6\Jobqueue\Queue\Message;
 class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
 {
     use \R3H6\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
+    use \R3H6\Jobqueue\Tests\Functional\Queue\QueueTestTrait;
 
     const TABLE = 'tx_jobqueuedatabase_domain_model_job';
     const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
