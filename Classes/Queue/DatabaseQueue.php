@@ -50,10 +50,7 @@ class DatabaseQueue implements QueueInterface
     ];
 
     /**
-     * Constructor
-     *
-     * @param string $name
-     * @param array  $options
+     * {@inheritdoc}
      */
     public function __construct($name, array $options = array())
     {
@@ -62,7 +59,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param Message $message
+     * {@inheritdoc}
      */
     public function publish(Message $message)
     {
@@ -75,8 +72,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param int $timeout
-     * @return Message
+     * {@inheritdoc}
      */
     public function waitAndTake($timeout = null)
     {
@@ -105,8 +101,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param int $timeout
-     * @return Message
+     * {@inheritdoc}
      */
     public function waitAndReserve($timeout = null)
     {
@@ -133,7 +128,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param Message $message
+     * {@inheritdoc}
      */
     public function finish(Message $message)
     {
@@ -147,8 +142,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param int $limit
-     * @return array<\R3H6\Jobqueue\Queue\Message>
+     * {@inheritdoc}
      */
     public function peek($limit = 1)
     {
@@ -162,8 +156,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @param string $identifier
-     * @return Message
+     * {@inheritdoc}
      */
     public function getMessage($identifier)
     {
@@ -176,7 +169,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -184,7 +177,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getOptions()
     {
@@ -192,7 +185,7 @@ class DatabaseQueue implements QueueInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
