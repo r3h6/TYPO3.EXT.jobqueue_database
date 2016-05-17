@@ -18,6 +18,7 @@ namespace R3H6\JobqueueDatabase\Queue;
 use R3H6\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
 use R3H6\Jobqueue\Queue\Message;
 use R3H6\Jobqueue\Queue\QueueInterface;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
  * DatabaseQueue
@@ -69,6 +70,7 @@ class DatabaseQueue implements QueueInterface
         $job->setState(Message::STATE_PUBLISHED);
         $this->jobRepository->add($job);
         $this->persistenceManager->persistAll();
+        $message->setIdentifier($job->getUid());
         $message->setState($job->getState());
     }
 
