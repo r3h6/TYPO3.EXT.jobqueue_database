@@ -28,6 +28,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
 {
     use \R3H6\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
     use \R3H6\Jobqueue\Tests\Functional\Queue\QueueTestTrait;
+    use \R3H6\Jobqueue\Tests\Functional\Queue\QueueDelayTestTrait;
 
     const TABLE = 'tx_jobqueuedatabase_domain_model_job';
     const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
@@ -100,26 +101,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         $this->assertSame(null, $message, 'There should be no jobs at this moment!');
     }
 
-    /**
-     * @test
-     * @depends publishMessageAndCheckDatabaseRecordAndMessageState
-     */
-    public function publishMessageAndWaitAndReserveWithoutAndWithTimeout()
-    {
-        $newMessage = new Message('TYPO3');
-        $newMessage->setAvailableAt(new DateTime('now + 2sec'));
-        $this->queue->publish($newMessage);
 
-        $this->assertSame(null, $this->queue->waitAndReserve(), 'There should be no job available at this moment!');
-
-        $message = $this->queue->waitAndReserve(2.1);
-        $this->assertInstanceOf(Message::class, $message);
-        $this->assertSame(Message::STATE_RESERVED, $message->getState(), 'Message has not the state reserved!');
-        $this->assertNotEmpty($message->getIdentifier(), 'Message identifier should be set!');
-
-        $record = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('state', self::TABLE, '');
-        $this->assertSame(Message::STATE_RESERVED, (int) $record['state'], 'Job has not the state reserved!');
-    }
 
     /**
      * @test
