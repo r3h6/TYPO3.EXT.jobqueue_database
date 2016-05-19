@@ -10,7 +10,7 @@
 Documentation
 =============
 
-Job queues for TYPO3 CMS. Implements concrete queue for the database workqueue. Requires the exension *jobqueue* to be installed.
+Job queues for TYPO3 CMS. Implements concrete queue for the database workqueue. Requires the exension **jobqueue** to be installed.
 
 
 Configuration
@@ -22,4 +22,4 @@ In order to use this queue you should set the *defaultQueue* to ``R3H6\JobqueueD
 Contributing
 ------------
 
-Bug reports and pull request are welcome through `GitHub <https://github.com/r3h6/TYPO3.EXT.jobqueue_database/>`_
+Bug reports and pull request are welcome through `GitHub <https://github.com/r3h6/TYPO3.EXT.jobqueue_database/>`_.
