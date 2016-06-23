@@ -6,7 +6,7 @@ return array(
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'dividers2tabs' => true,
-
+        'hideTable' => true,
         'enablecolumns' => array(
 
         ),
