@@ -34,6 +34,8 @@ before_install:
 
 before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
+  - composer config repositories.typo3 composer https://composer.typo3.org/
+  - composer require typo3-ter/jobqueue
   # Restore composer.json
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/web
