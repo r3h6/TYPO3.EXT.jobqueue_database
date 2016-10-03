@@ -25,3 +25,10 @@ Contributing
 ------------
 
 Bug reports and pull request are welcome through `GitHub <https://github.com/r3h6/TYPO3.EXT.jobqueue_database/>`_.
+
+
+Changelog
+---------
+
+1.1.0 Add composer file
+1.0.0 First release
