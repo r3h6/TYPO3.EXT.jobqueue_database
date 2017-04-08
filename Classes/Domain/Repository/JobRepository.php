@@ -39,7 +39,13 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
+     * Finds the next job in the queue.
+     *
+     * WARNING: Other workers may found the same job.
+     *          Thread savety is handled by the database queue.
+     *
      * @param $queueName
+     * @return \R3H6\JobqueueDatabase\Domain\Model\Job
      */
     public function findNextOneByQueueName($queueName)
     {
@@ -49,6 +55,16 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute()->getFirst();
     }
 
+    /**
+     * Finds the next few published jobs in the queue.
+     *
+     * WARNING: Other workers may found the same jobs.
+     *          Thread savety is handled by the database queue.
+     *
+     * @param  string  $queueName
+     * @param  integer $limit
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
     public function findNextByQueueName($queueName, $limit = 1)
     {
         /** @var TYPO3\CMS\Extbase\Persistence\Generic\Query $query */
@@ -80,6 +96,12 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         );
     }
 
+    /**
+     * Tries to reserve a job.
+     *
+     * @param  DatabaseJob $job
+     * @return boolean true if job could be reserved
+     */
     public function reserve(DatabaseJob $job)
     {
         $job->setState(Message::STATE_RESERVED);
