@@ -37,6 +37,14 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
     protected $coreExtensionsToLoad = array('extbase');
     protected $testExtensionsToLoad = array('typo3conf/ext/jobqueue', 'typo3conf/ext/jobqueue_database');
 
+    protected $configurationToUseInTestInstance = array(
+        'EXT' => array(
+            'extConf' => array(
+                'jobqueue' => 'a:1:{s:8:"logLevel";i:7;}',
+            ),
+        ),
+    );
+
     /**
      * @var TYPO3\CMS\Extbase\Object\ObjectManager
      */
@@ -67,18 +75,18 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function publishMessageAndCheckDatabaseRecordAndMessageState()
     {
-        $payload = 'TYPO3' . uniqid();
+        $payload = 'PAYLOAD ' . date('r');
         $newMessage = new Message($payload);
         $this->queue->publish($newMessage);
         $record = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('queue_name, payload, state, attemps, starttime', self::TABLE, '');
-        $this->assertSame([
+        $this->assertEquals([
             'queue_name' => self::QUEUE_NAME,
             'payload' => $payload,
             'state' => ''.Message::STATE_PUBLISHED,
             'attemps' => '0',
             'starttime' => '0',
         ], $record, 'Invalid database record');
-        $this->assertSame(Message::STATE_PUBLISHED, $newMessage->getState());
+        $this->assertSame(Message::STATE_PUBLISHED, $newMessage->getState(), 'Message state should be "published"!');
     }
 
     /**
