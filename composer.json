@@ -1,6 +1,6 @@
 {
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/r3h6/TYPO3.EXT.jobqueue/" }
+        { "type": "vcs", "url": "https://github.com/r3h6/TYPO3.EXT.jobqueue.git" }
     ],
     "name": "r3h6/jobqueue-database",
     "type": "typo3-cms-extension",
@@ -11,12 +11,6 @@
         "jobqueue",
         "job",
         "queue"
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://composer.typo3.org/"
-        }
     ],
     "homepage": "https://github.com/r3h6/TYPO3.EXT.jobqueue_database",
     "support": {
@@ -39,6 +33,7 @@
     "autoload-dev": {
         "psr-4": {
             "R3H6\\JobqueueDatabase\\Tests\\": "Tests",
+            "R3H6\\Jobqueue\\Tests\\": ".Build/web/typo3conf/ext/jobqueue/Tests/",
             "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
         }
     },

@@ -67,18 +67,18 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
      */
     public function publishMessageAndCheckDatabaseRecordAndMessageState()
     {
-        $payload = 'TYPO3' . uniqid();
+        $payload = 'PAYLOAD ' . date('r');
         $newMessage = new Message($payload);
         $this->queue->publish($newMessage);
         $record = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('queue_name, payload, state, attemps, starttime', self::TABLE, '');
-        $this->assertSame([
+        $this->assertEquals([
             'queue_name' => self::QUEUE_NAME,
             'payload' => $payload,
             'state' => ''.Message::STATE_PUBLISHED,
             'attemps' => '0',
             'starttime' => '0',
         ], $record, 'Invalid database record');
-        $this->assertSame(Message::STATE_PUBLISHED, $newMessage->getState());
+        $this->assertSame(Message::STATE_PUBLISHED, $newMessage->getState(), 'Message state should be "published"!');
     }
 
     /**
