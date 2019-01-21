@@ -18,6 +18,9 @@ namespace R3H6\JobqueueDatabase\Domain\Repository;
 use R3H6\Jobqueue\Queue\Message;
 use R3H6\JobqueueDatabase\Domain\Model\Job as DatabaseJob;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * The repository for Jobs.
@@ -105,11 +108,23 @@ class JobRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function reserve(DatabaseJob $job)
     {
         $job->setState(Message::STATE_RESERVED);
-        $where = 'state!='.(int) Message::STATE_RESERVED.' AND uid='.(int) $job->getUid();
-        $fields = ['state' => Message::STATE_RESERVED];
-        $this->getDatabaseConnection()->exec_UPDATEquery($this->table, $where, $fields);
+        // $where = 'state!='.(int) Message::STATE_RESERVED.' AND uid='.(int) $job->getUid();
+        // $fields = ['state' => Message::STATE_RESERVED];
+        // $this->getDatabaseConnection()->exec_UPDATEquery($this->table, $where, $fields);
 
-        return ($this->getDatabaseConnection()->sql_affected_rows() === 1);
+        // return ($this->getDatabaseConnection()->sql_affected_rows() === 1);
+
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->table);
+        $result = $queryBuilder
+           ->update($this->table)
+           ->where(
+              $queryBuilder->expr()->neq('state', $queryBuilder->createNamedParameter(Message::STATE_RESERVED, Connection::PARAM_INT)),
+              $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($job->getUid(), Connection::PARAM_INT))
+           )
+           ->set('state', Message::STATE_RESERVED)
+           ->execute();
+
+        return $result === 1;
     }
 
     /**

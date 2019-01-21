@@ -18,7 +18,7 @@ namespace R3H6\JobqueueDatabase\Tests\Unit\Domain\Model;
 /**
  * Test case for class \R3H6\JobqueueDatabase\Domain\Model\Job.
  */
-class JobTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class JobTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \R3H6\JobqueueDatabase\Domain\Model\Job

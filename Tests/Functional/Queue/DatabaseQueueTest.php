@@ -24,11 +24,12 @@ use R3H6\Jobqueue\Queue\Message;
 /**
  * Functional test case for the DatabaseQueue.
  */
-class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
+class DatabaseQueueTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
 {
     use \R3H6\JobqueueDatabase\Tests\Functional\BasicFrontendEnvironmentTrait;
     use \R3H6\Jobqueue\Tests\Functional\Queue\QueueTestTrait;
     use \R3H6\Jobqueue\Tests\Functional\Queue\QueueDelayTestTrait;
+    use \R3H6\Jobqueue\Tests\PhpunitCompatibilityTrait;
 
     const TABLE = 'tx_jobqueuedatabase_domain_model_job';
     const JOBS_FIXTURES = 'typo3conf/ext/jobqueue_database/Tests/Functional/Fixtures/Database/jobs.xml';
@@ -78,14 +79,16 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         $payload = 'PAYLOAD ' . date('r');
         $newMessage = new Message($payload);
         $this->queue->publish($newMessage);
-        $record = $this->getDatabaseConnection()->exec_SELECTgetSingleRow('queue_name, payload, state, attemps, starttime', self::TABLE, '');
-        $this->assertEquals([
+        $record = $this->getDatabaseConnection()->selectSingleRow('*', self::TABLE, '1=1');
+        $expexted = [
             'queue_name' => self::QUEUE_NAME,
             'payload' => $payload,
             'state' => ''.Message::STATE_PUBLISHED,
             'attemps' => '0',
             'starttime' => '0',
-        ], $record, 'Invalid database record');
+        ];
+
+        $this->assertEquals(array_intersect_key($record, $expexted), $expexted, 'Invalid database record');
         $this->assertSame(Message::STATE_PUBLISHED, $newMessage->getState(), 'Message state should be "published"!');
     }
 
@@ -120,7 +123,7 @@ class DatabaseQueueTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         $message = new Message('', 1);
         $this->queue->finish($message);
         $this->assertSame(Message::STATE_DONE, $message->getState(), 'Message is not of state done!');
-        $this->assertSame(0, $this->getDatabaseConnection()->exec_SELECTcountRows('*', self::TABLE, 'uid=1'), 'Job was not deleted in database!');
+        $this->assertSame(0, $this->getDatabaseConnection()->selectCount('*', self::TABLE, 'uid=1'), 'Job was not deleted in database!');
     }
 
     /**

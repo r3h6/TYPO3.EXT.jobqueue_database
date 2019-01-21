@@ -11,7 +11,7 @@ return array(
 
         ),
         'searchFields' => 'uid,queue_name,state,attemps,starttime,tstamp,',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('jobqueue_database').'Resources/Public/Icons/tx_jobqueuedatabase_domain_model_job.gif',
+        'iconfile' => 'EXT:jobqueue_database/Resources/Public/Icons/tx_jobqueuedatabase_domain_model_job.gif',
         'readOnly' => true,
         'rootLevel' => 1,
     ),
